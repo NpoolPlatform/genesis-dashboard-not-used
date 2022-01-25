@@ -27,6 +27,31 @@ interface CreateAdminAppsResponse {
   Infos: Array<App>
 }
 
+interface AppRole {
+  ID: string
+  AppID: string
+  CreatedBy: string
+  Role: string
+  Description: string
+  Default: boolean
+}
+
+interface GetGenesisRoleRequest {
+  Message: ReqMessage
+}
+
+interface GetGenesisRoleResponse {
+  Info: AppRole
+}
+
+interface CreateGenesisRoleRequest {
+  Message: ReqMessage
+}
+
+interface CreateGenesisRoleResponse {
+  Info: AppRole
+}
+
 interface LoginRequest {
   Username: string
   Password: string
@@ -65,5 +90,10 @@ export {
   GetAdminAppsRequest,
   GetAdminAppsResponse,
   CreateAdminAppsRequest,
-  CreateAdminAppsResponse
+  CreateAdminAppsResponse,
+  AppRole,
+  GetGenesisRoleRequest,
+  GetGenesisRoleResponse,
+  CreateGenesisRoleRequest,
+  CreateGenesisRoleResponse
 }

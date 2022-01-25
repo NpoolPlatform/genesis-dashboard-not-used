@@ -68,6 +68,19 @@ onMounted(() => {
       }
     }
   })
+
+  /*
+  store.dispatch(GenesisActionTypes.GetGenesisRole, {
+    Message: {
+      ModuleKey: ModuleKey.ModuleIndex,
+      Error: {
+        Title: t('MSG_GET_GENESIS_ROLE_FAIL'),
+        Popup: true,
+        Type: NotificationType.Error
+      }
+    }
+  })
+  */
 })
 
 onUnmounted(() => {

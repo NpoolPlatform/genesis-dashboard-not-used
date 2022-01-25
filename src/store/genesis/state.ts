@@ -1,9 +1,10 @@
-import { UserInfo, App } from './types'
+import { UserInfo, App, AppRole } from './types'
 
 interface UserState {
   LoginedUser: UserInfo
   GoogleToken: string
   AdminApps: Array<App>
+  GensisRole?: AppRole
 }
 
 function state (): UserState {

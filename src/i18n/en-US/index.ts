@@ -10,5 +10,6 @@ export default {
   MSG_LOGIN_FAIL: 'You failed to login',
   MSG_GET_ADMIN_APPS_FAIL: 'You failed to get admin apps',
   MSG_CREATE_ADMIN_APPS_FAIL: 'You failed to create admin apps',
+  MSG_GET_GENESIS_ROLE_FAIL: 'You failed to get genesis role',
   MSG_CREATE_ADMIN_APPS: 'Create Admin Apps'
 }
