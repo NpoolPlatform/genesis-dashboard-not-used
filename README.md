@@ -36,20 +36,20 @@ See [Configuring quasar.conf.js](https://quasar.dev/quasar-cli/quasar-conf-js).
 
 Jenkinsfile
 
-+ church-dashboard -> your_project_name
++ genesis-dashboard -> your_project_name
 
 nginx.template.conf
 
-+ church_dashboard_error.log -> your_project_name_error.log
++ genesis_dashboard_error.log -> your_project_name_error.log
 
 k8s
 
-+ 01-church-dashboard.yaml -> your_project_name.yaml
-+ church-dashboard -> your_project_name
++ 01-genesis-dashboard.yaml -> your_project_name.yaml
++ genesis-dashboard -> your_project_name
 
 02-ingress.yaml
 
-+ church-dashboard -> your_project_name
++ genesis-dashboard -> your_project_name
 
 logo
 

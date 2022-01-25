@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1beta1
+kind: Ingress
+metadata:
+  name: genesis-dashboard-nginx-ingress
+  namespace: kube-system
+  annotations:
+    k8s.kuboard.cn/displayName: genesis-dashboard-nginx
+    k8s.kuboard.cn/workload: genesis-dashboard-nginx
+    kubernetes.io/ingress.class: "devops-vpn-nginx-internal"
+    nginx.com/sticky-cookie-services: "serviceName=kuboard srv_id expires=1h path=/"
+
+spec:
+  rules:
+    - host: genesis.internal-devops.development.xpool.top
+      http: &http_rules
+        paths:
+          - path: /
+            backend:
+              serviceName: genesis-dashboard
+              servicePort: 80

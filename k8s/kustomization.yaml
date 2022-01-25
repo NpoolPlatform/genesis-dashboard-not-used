@@ -1,6 +1,6 @@
 commonLabels:
-  # app: church-dashboard
+  # app: genesis-dashboard
 
 resources:
-  - 01-church-dashboard.yaml
-  - 02-ingress.yaml
+  - 01-genesis-dashboard.yaml
+  - 02-nginx-ingress.yaml

@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: church-dashboard
+  name: genesis-dashboard
   namespace: kube-system
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: church-dashboard
+      app: genesis-dashboard
   template:
     metadata:
       labels:
-        app: church-dashboard
+        app: genesis-dashboard
     spec:
       containers:
-        - name: church-dashboard
-          image: uhub.service.ucloud.cn/entropypool/church-dashboard:latest
+        - name: genesis-dashboard
+          image: uhub.service.ucloud.cn/entropypool/genesis-dashboard:latest
           imagePullPolicy: Always
           env:
             - name: ENV_ENVIRONMENT_TARGET
@@ -42,7 +42,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: church-dashboard
+  name: genesis-dashboard
   namespace: kube-system
 spec:
   ports:
@@ -50,4 +50,4 @@ spec:
       port: 80
       targetPort: 80
   selector:
-    app: church-dashboard
+    app: genesis-dashboard

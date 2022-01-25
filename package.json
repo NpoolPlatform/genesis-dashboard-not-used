@@ -1,8 +1,8 @@
 {
-  "name": "church-dashboard",
+  "name": "genesis-dashboard",
   "version": "0.0.1",
-  "description": "Church Dashboard Webui",
-  "productName": "Church Dashboard",
+  "description": "Genesis Dashboard Webui",
+  "productName": "Genesis Dashboard",
   "author": "The HashAge Team",
   "private": true,
   "scripts": {
