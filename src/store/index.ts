@@ -18,14 +18,7 @@ import {
   UserMutations,
   UserActions,
   UserGetters
-} from './user-helper'
-
-import {
-  mainBreadcrumbs,
-  MainBreadcrumbsState,
-  MainBreadcrumbsMutations,
-  MainBreadcrumbsGetters
-} from './main-breadcrumbs'
+} from './genesis'
 
 import {
   notifications,
@@ -37,22 +30,20 @@ import {
 // 2 combine your store to root store
 export interface RootState {
   user: UserState,
-  mainBreadcrumbs: MainBreadcrumbsState,
   notifications: NotificationState
 }
 
 // 3 combine your actions, mutations and getters to root, if have multi use & combin
 // for example a & b
 export type Actions = UserActions
-export type Mutations = UserMutations & MainBreadcrumbsMutations & NotificationMutations
-export type Getters = UserGetters & MainBreadcrumbsGetters & NotificationGetters
+export type Mutations = UserMutations & NotificationMutations
+export type Getters = UserGetters & NotificationGetters
 
 // 4 attach your module to root
 export default store(function (/* { ssrContext } */) {
   const Store = createStore<RootState>({
     modules: {
       user,
-      mainBreadcrumbs,
       notifications
     },
 

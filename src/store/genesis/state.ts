@@ -1,8 +1,9 @@
-import { UserInfo } from './types'
+import { UserInfo, App } from './types'
 
 interface UserState {
   LoginedUser: UserInfo
   GoogleToken: string
+  AdminApps: Array<App>
 }
 
 function state (): UserState {
@@ -15,7 +16,8 @@ function state (): UserState {
       PhoneNO: '',
       MyInfo: {}
     },
-    GoogleToken: ''
+    GoogleToken: '',
+    AdminApps: [] as Array<App>
   }
 }
 

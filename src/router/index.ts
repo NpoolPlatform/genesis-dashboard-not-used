@@ -35,7 +35,7 @@ export default route<RootState>(function ({ store /*, ssrContext */ }: { store: 
   })
 
   router.beforeEach((to, _, next) => {
-    if (!store.getters.getLogined && to.path !== '/login') {
+    if (!store.getters.getLogined && to.path !== '/login' && to.path !== '/') {
       next({
         path: '/login',
         replace: true

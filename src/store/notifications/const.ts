@@ -1,4 +1,5 @@
 enum ModuleKey {
+  ModuleIndex = 'index',
   ModuleLogin = 'login'
 }
 

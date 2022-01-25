@@ -9,7 +9,7 @@
 <script setup lang='ts'>
 import { defineAsyncComponent } from 'vue'
 
-const Login = defineAsyncComponent(() => import('src/components/Login/Login.vue'))
+const Login = defineAsyncComponent(() => import('src/components/login/Login.vue'))
 
 </script>
 
