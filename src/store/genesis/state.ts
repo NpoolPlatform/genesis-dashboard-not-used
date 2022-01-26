@@ -1,10 +1,11 @@
-import { UserInfo, App, AppRole } from './types'
+import { UserInfo, App, AppRole, AppRoleUser } from './types'
 
 interface UserState {
   LoginedUser: UserInfo
   GoogleToken: string
   AdminApps: Array<App>
   GensisRole?: AppRole
+  GenesisUsers? :Map<string, Array<AppRoleUser>>
 }
 
 function state (): UserState {

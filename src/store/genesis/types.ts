@@ -52,6 +52,23 @@ interface CreateGenesisRoleResponse {
   Info: AppRole
 }
 
+interface AppRoleUser {
+  ID: string
+  AppID: string
+  RoleID: string
+  UserID: string
+}
+
+interface GetAppRoleUserByAppRoleRequest {
+  AppID: string
+  RoleID: string
+  Message: ReqMessage
+}
+
+interface GetAppRoleUserByAppRoleResponse {
+  Infos: Array<AppRoleUser>
+}
+
 interface LoginRequest {
   Username: string
   Password: string
@@ -95,5 +112,8 @@ export {
   GetGenesisRoleRequest,
   GetGenesisRoleResponse,
   CreateGenesisRoleRequest,
-  CreateGenesisRoleResponse
+  CreateGenesisRoleResponse,
+  AppRoleUser,
+  GetAppRoleUserByAppRoleRequest,
+  GetAppRoleUserByAppRoleResponse
 }

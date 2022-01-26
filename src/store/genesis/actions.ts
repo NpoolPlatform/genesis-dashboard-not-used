@@ -4,7 +4,21 @@ import { ActionTypes } from './action-types'
 import { MutationTypes } from './mutation-types'
 import { UserMutations } from './mutations'
 import { UserState } from './state'
-import { LoginRequest, LoginResponse, GetGoogleTokenRequest, GetAdminAppsRequest, GetAdminAppsResponse, CreateAdminAppsRequest, CreateAdminAppsResponse } from './types'
+import {
+  LoginRequest,
+  LoginResponse,
+  GetGoogleTokenRequest,
+  GetAdminAppsRequest,
+  GetAdminAppsResponse,
+  CreateAdminAppsRequest,
+  CreateAdminAppsResponse,
+  GetGenesisRoleRequest,
+  GetGenesisRoleResponse,
+  CreateGenesisRoleRequest,
+  CreateGenesisRoleResponse,
+  GetAppRoleUserByAppRoleRequest,
+  GetAppRoleUserByAppRoleResponse
+} from './types'
 import { API } from './const'
 import { MutationTypes as NotificationMutationTypes } from '../notifications/mutation-types'
 import { notificationPush, notificationPop } from '../notifications/helper'
@@ -27,6 +41,30 @@ interface UserActions {
     RootState,
     UserMutations<UserState>>,
     req: CreateAdminAppsRequest): void
+
+  [ActionTypes.GetGenesisRole]({
+    commit
+  }: AugmentedActionContext<
+    UserState,
+    RootState,
+    UserMutations<UserState>>,
+    req: GetGenesisRoleRequest): void
+
+  [ActionTypes.CreateGenesisRole]({
+    commit
+  }: AugmentedActionContext<
+    UserState,
+    RootState,
+    UserMutations<UserState>>,
+    req: CreateGenesisRoleRequest): void
+
+  [ActionTypes.GetAppRoleUsersByAppRole]({
+    commit
+  }: AugmentedActionContext<
+    UserState,
+    RootState,
+    UserMutations<UserState>>,
+    req: GetAppRoleUserByAppRoleRequest): void
 
   [ActionTypes.Login]({
     commit
@@ -65,6 +103,45 @@ const actions: ActionTree<UserState, RootState> = {
       req.Message,
       (resp: CreateAdminAppsResponse): void => {
         commit(MutationTypes.SetAdminApps, resp.Infos)
+      })
+  },
+
+  [ActionTypes.GetGenesisRole] ({ commit }, req: GetGenesisRoleRequest) {
+    doAction<GetGenesisRoleRequest, GetGenesisRoleResponse>(
+      commit,
+      API.GET_GENESIS_ROLE,
+      req,
+      req.Message,
+      (resp: GetGenesisRoleResponse): void => {
+        if (resp.Info) {
+          commit(MutationTypes.SetGenesisRole, resp.Info)
+        }
+      })
+  },
+
+  [ActionTypes.CreateGenesisRole] ({ commit }, req: CreateGenesisRoleRequest) {
+    doAction<CreateGenesisRoleRequest, CreateGenesisRoleResponse>(
+      commit,
+      API.CREATE_GENESIS_ROLE,
+      req,
+      req.Message,
+      (resp: CreateGenesisRoleResponse): void => {
+        if (resp.Info) {
+          commit(MutationTypes.SetGenesisRole, resp.Info)
+        }
+      })
+  },
+
+  [ActionTypes.GetAppRoleUsersByAppRole] ({ commit }, req: GetAppRoleUserByAppRoleRequest) {
+    doAction<GetAppRoleUserByAppRoleRequest, GetAppRoleUserByAppRoleResponse>(
+      commit,
+      API.GET_APP_ROLE_USERS_BY_APP_ROLE,
+      req,
+      req.Message,
+      (resp: GetAppRoleUserByAppRoleResponse): void => {
+        if (resp.Infos && resp.Infos.length > 0) {
+          commit(MutationTypes.SetGenesisUsers, resp.Infos)
+        }
       })
   },
 
