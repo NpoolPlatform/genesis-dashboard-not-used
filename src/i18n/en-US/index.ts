@@ -15,5 +15,6 @@ export default {
   MSG_CREATE_GENESIS_USER_FAIL: 'You failed to create genesis user',
   MSG_CREATE_ADMIN_APPS: 'Create Admin Apps',
   MSG_CREATE_GENESIS_ROLE: 'Create Genesis Role',
-  MSG_CREATE_GENESIS_USER: 'Create Genesis User'
+  MSG_CREATE_GENESIS_USER: 'Create Genesis User',
+  MSG_APP_ID: 'App ID'
 }

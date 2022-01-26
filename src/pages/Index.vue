@@ -24,8 +24,14 @@
       dense
       :rows='genesisUsers'
     >
-      <template #top-right>
-        <q-btn v-if='!genesisUserCreated || !churchUserCreated' @click='onCreateGenesisUser'>
+      <template v-if='!genesisUserCreated || !churchUserCreated' #top-right>
+        <div class='row'>
+          <q-select v-model='selectedAppID' dense :options='appIDs' :label='$t("MSG_APP_ID")' />
+          <q-input v-model='username' dense :label='$t("MSG_USERNAME")' />
+          <q-input v-model='password' dense :label='$t("MSG_PASSWORD")' disable />
+          <q-btn flat dense icon='published_with_changes' @click='onRefreshPassword' />
+        </div>
+        <q-btn @click='onCreateGenesisUser'>
           {{ $t('MSG_CREATE_GENESIS_USER') }}
         </q-btn>
       </template>
@@ -53,6 +59,16 @@ const unsubscribe = ref<FunctionVoid>()
 
 const logined = computed(() => store.getters.getLogined)
 const adminApps = computed(() => store.getters.getAdminApps)
+const adminAppIDs = computed(() => {
+  const ids = [] as Array<string>
+  adminApps.value.forEach((app) => {
+    ids.push(app.ID)
+  })
+  return ids
+})
+
+const appIDs = ref(adminAppIDs.value)
+
 const genesisRole = computed(() => store.getters.getGenesisRole)
 const genesisUsers = computed(() => store.getters.getGenesisUsers)
 
@@ -62,6 +78,31 @@ const genesisAppCreated = ref(false)
 const churchAppCreated = ref(false)
 const genesisUserCreated = ref(false)
 const churchUserCreated = ref(false)
+const selectedAppID = ref('')
+const username = ref('')
+const password = ref('')
+
+const onRefreshPassword = () => {
+  password.value = ''
+  const chars = 'a-z,A-Z,0-9,#'
+  const charactersArray = chars.split(',')
+  let CharacterSet = ''
+  if (charactersArray.indexOf('a-z') >= 0) {
+    CharacterSet += 'abcdefghijklmnopqrstuvwxyz'
+  }
+  if (charactersArray.indexOf('A-Z') >= 0) {
+    CharacterSet += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+  }
+  if (charactersArray.indexOf('0-9') >= 0) {
+    CharacterSet += '0123456789'
+  }
+  if (charactersArray.indexOf('#') >= 0) {
+    CharacterSet += '![]{}()%&$#@'
+  }
+  for (let i = 0; i < 16; i++) {
+    password.value += CharacterSet.charAt(Math.floor(Math.random() * CharacterSet.length))
+  }
+}
 
 watch(adminApps, () => {
   adminApps.value.forEach((app) => {
@@ -72,6 +113,8 @@ watch(adminApps, () => {
       genesisAppCreated.value = true
     }
   })
+  appIDs.value = adminAppIDs.value
+  selectedAppID.value = appIDs.value.length > 0 ? appIDs.value[0] : ''
 })
 
 watch(genesisUsers, () => {
@@ -80,13 +123,21 @@ watch(genesisUsers, () => {
       if (app.Name === 'Church Dashboard') {
         if (user.AppID === app.ID && user.RoleID === genesisRole.value.ID) {
           churchUserCreated.value = true
+          appIDs.value = adminAppIDs.value.filter((id) => {
+            return id !== app.ID
+          })
         }
       }
       if (app.Name === 'Genesis Dashboard') {
         if (user.AppID === app.ID && user.RoleID === genesisRole.value.ID) {
           genesisUserCreated.value = true
+          appIDs.value = adminAppIDs.value.filter((id) => {
+            return id !== app.ID
+          })
         }
       }
+
+      selectedAppID.value = appIDs.value.length > 0 ? appIDs.value[0] : ''
     })
   })
 })
