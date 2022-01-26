@@ -114,7 +114,7 @@ onMounted(() => {
     }
 
     if (mutation.type === NotificationMutationTypes.Push) {
-      const notification = store.getters.peekLoginNotification
+      const notification = store.getters.peekNotification(ModuleKey.ModuleLogin)
       if (notification) {
         notify(notification)
         store.commit(NotificationMutationTypes.Pop, notificationPop(notification))

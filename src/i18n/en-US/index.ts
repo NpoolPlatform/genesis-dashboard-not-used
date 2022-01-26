@@ -13,6 +13,8 @@ export default {
   MSG_GET_GENESIS_ROLE_FAIL: 'You failed to get genesis role',
   MSG_CREATE_GENESIS_ROLE_FAIL: 'You failed to create genesis role',
   MSG_CREATE_GENESIS_USER_FAIL: 'You failed to create genesis user',
+  MSG_USERNAME_LENGTH_WARNING: 'Username should have 8 letters at least',
+  MSG_PASSWORD_LENGTH_WARNING: 'Password should have 8 letters & numbers & symbols at least',
   MSG_CREATE_ADMIN_APPS: 'Create Admin Apps',
   MSG_CREATE_GENESIS_ROLE: 'Create Genesis Role',
   MSG_CREATE_GENESIS_USER: 'Create Genesis User',

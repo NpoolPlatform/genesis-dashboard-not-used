@@ -45,6 +45,8 @@ import { useStore } from 'src/store'
 import { useRouter } from 'vue-router'
 import { ActionTypes as GenesisActionTypes } from 'src/store/genesis/action-types'
 import { ModuleKey, Type as NotificationType } from 'src/store/notifications/const'
+import { MutationTypes as NotificationMutationTypes } from 'src/store/notifications/mutation-types'
+import { notify, notificationPop, notificationPush } from 'src/store/notifications/helper'
 import { useI18n } from 'vue-i18n'
 import { FunctionVoid } from '../types/types'
 import { MutationTypes } from 'src/store/genesis/mutation-types'
@@ -82,8 +84,8 @@ const selectedAppID = ref('')
 const username = ref('')
 const password = ref('')
 
-const onRefreshPassword = () => {
-  password.value = ''
+const updatePassword = (): string => {
+  let password = ''
   const chars = 'a-z,A-Z,0-9,#'
   const charactersArray = chars.split(',')
   let CharacterSet = ''
@@ -100,8 +102,13 @@ const onRefreshPassword = () => {
     CharacterSet += '![]{}()%&$#@'
   }
   for (let i = 0; i < 16; i++) {
-    password.value += CharacterSet.charAt(Math.floor(Math.random() * CharacterSet.length))
+    password += CharacterSet.charAt(Math.floor(Math.random() * CharacterSet.length))
   }
+  return password
+}
+
+const onRefreshPassword = () => {
+  password.value = updatePassword()
 }
 
 watch(adminApps, () => {
@@ -169,6 +176,22 @@ const onCreateGenesisRole = () => {
 }
 
 const onCreateGenesisUser = () => {
+  if (username.value.length < 8) {
+    store.commit(NotificationMutationTypes.Push, notificationPush(ModuleKey.ModuleIndex, {
+      Title: t('MSG_USERNAME_LENGTH_WARNING'),
+      Popup: true,
+      Type: NotificationType.Error
+    }))
+    return
+  }
+  if (password.value.length < 8) {
+    store.commit(NotificationMutationTypes.Push, notificationPush(ModuleKey.ModuleIndex, {
+      Title: t('MSG_PASSWORD_LENGTH_WARNING'),
+      Popup: true,
+      Type: NotificationType.Warning
+    }))
+    return
+  }
   console.log('TODO: create app user then create app role user')
 }
 
@@ -207,6 +230,14 @@ onMounted(() => {
     if (mutation.type === MutationTypes.SetGenesisUsers) {
       if (!logined.value) {
         void router.push('/login')
+      }
+    }
+
+    if (mutation.type === NotificationMutationTypes.Push) {
+      const notification = store.getters.peekNotification(ModuleKey.ModuleIndex)
+      if (notification) {
+        notify(notification)
+        store.commit(NotificationMutationTypes.Pop, notificationPop(notification))
       }
     }
   })
