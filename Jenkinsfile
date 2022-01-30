@@ -247,6 +247,7 @@ pipeline {
       }
       steps {
         sh 'sed -i "s/uhub.service.ucloud.cn/$DOCKER_REGISTRY/g" k8s/01-genesis-dashboard.yaml'
+        sh 'sed -i "s/genesis.internal-devops.development.xpool.top/genesis.internal-devops.$TARGET_ENV.xpool.top/g" k8s/02-traefik-vpn-ingress.yaml'
         sh 'kubectl apply -k k8s'
       }
     }
@@ -265,6 +266,7 @@ pipeline {
           git checkout $tag
           sed -i "s/genesis-dashboard:latest/genesis-dashboard:$tag/g" k8s/01-genesis-dashboard.yaml
           sed -i "s/uhub.service.ucloud.cn/$DOCKER_REGISTRY/g" k8s/01-genesis-dashboard.yaml
+          sed -i "s/genesis.internal-devops.development.xpool.top/genesis.internal-devops.$TARGET_ENV.xpool.top/g" k8s/02-traefik-vpn-ingress.yaml
           kubectl apply -k k8s
         '''.stripIndent())
       }
@@ -290,6 +292,7 @@ pipeline {
           git checkout $tag
           sed -i "s/genesis-dashboard:latest/genesis-dashboard:$tag/g" k8s/01-genesis-dashboard.yaml
           sed -i "s/uhub.service.ucloud.cn/$DOCKER_REGISTRY/g" k8s/01-genesis-dashboard.yaml
+          sed -i "s/genesis.internal-devops.development.xpool.top/genesis.internal-devops.$TARGET_ENV.xpool.top/g" k8s/02-traefik-vpn-ingress.yaml
           kubectl apply -k k8s
         '''.stripIndent())
       }
