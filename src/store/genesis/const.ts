@@ -6,8 +6,8 @@ enum API {
   CREATE_GENESIS_ROLE_USER = '/appuser-manager/v1/create/genesis/role/user',
   GET_APP_ROLE_USERS_BY_APP_ROLE = '/appuser-manager/v1/get/app/role/users/by/app/role',
   GET_APP_USER = '/appuser-manager/v1/get/app/user',
-  LOGIN = '/login-door/v1/login',
-  LOGOUT = '/login-door/v1/logout'
+  LOGIN = '/login-gateway/v1/login',
+  LOGOUT = '/login-gateway/v1/logout'
 }
 
 enum LoginType {

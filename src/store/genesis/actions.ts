@@ -28,6 +28,7 @@ import { MutationTypes as NotificationMutationTypes } from '../notifications/mut
 import { notificationPush, notificationPop } from '../notifications/helper'
 import { Notification } from '../notifications/types'
 import { doAction } from '../action'
+import { api } from 'src/boot/axios'
 
 interface UserActions {
   [ActionTypes.GetAdminApps]({
@@ -197,6 +198,8 @@ const actions: ActionTree<UserState, RootState> = {
       req,
       req.Message,
       (resp: LoginResponse): void => {
+        const headers = api.defaults.headers as Record<string, string>
+        headers['X-User-ID'] = resp.Info.UserBasicInfo.UserID
         commit(MutationTypes.SetLoginedUser, {
           UserID: resp.Info.UserBasicInfo.UserID,
           Username: resp.Info.UserBasicInfo.Username,
