@@ -69,6 +69,44 @@ interface GetAppRoleUserByAppRoleResponse {
   Infos: Array<AppRoleUser>
 }
 
+interface AppUser {
+  ID?: string
+  AppID: string
+  EmailAddress?: string
+  PhoneNO?: string
+  ImportedFromApp?: string
+  CreateAt?: number
+}
+
+interface AppUserSecret {
+  ID?: string
+  AppID: string
+  UserID?: string
+  PasswordHash: string
+  Salt?: string
+  GoogleSecret?: string
+}
+
+interface GetAppUserRequest {
+  ID: string
+  Message: ReqMessage
+}
+
+interface GetAppUserResponse {
+  Info: AppUser
+}
+
+interface CreateGenesisUserRequest {
+  User: AppUser
+  Secret: AppUserSecret
+  Message: ReqMessage
+}
+
+interface CreateGenesisUserResponse {
+  User: AppUser
+  RoleUser: AppRoleUser
+}
+
 interface LoginRequest {
   Username: string
   Password: string
@@ -115,5 +153,11 @@ export {
   CreateGenesisRoleResponse,
   AppRoleUser,
   GetAppRoleUserByAppRoleRequest,
-  GetAppRoleUserByAppRoleResponse
+  GetAppRoleUserByAppRoleResponse,
+  AppUser,
+  GetAppUserRequest,
+  GetAppUserResponse,
+  CreateGenesisUserRequest,
+  CreateGenesisUserResponse,
+  AppUserSecret
 }

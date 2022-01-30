@@ -5,6 +5,8 @@ export enum ActionTypes {
   CreateGenesisRole = 'CREATE_GENESIS_ROLE',
   CreateGenesisRoleUser = 'CREATE_GENESIS_ROLE_USER',
   GetAppRoleUsersByAppRole = 'GET_APP_ROLE_USERS_BY_APP_ROLE',
+  GetAppUser = 'GET_APP_USER',
+  CreateGenesisUser = 'CREATE_GENESIS_USER',
   Login = 'LOGIN',
   GetGoogleToken = 'GET_GOOGLE_TOKEN'
 }

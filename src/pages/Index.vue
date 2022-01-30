@@ -50,6 +50,8 @@ import { notify, notificationPop, notificationPush } from 'src/store/notificatio
 import { useI18n } from 'vue-i18n'
 import { FunctionVoid } from '../types/types'
 import { MutationTypes } from 'src/store/genesis/mutation-types'
+import { AppRoleUser } from 'src/store/genesis/types'
+import { encryptPassword } from 'src/utils/utils'
 
 const store = useStore()
 
@@ -192,7 +194,24 @@ const onCreateGenesisUser = () => {
     }))
     return
   }
-  console.log('TODO: create app user then create app role user')
+  store.dispatch(GenesisActionTypes.CreateGenesisRoleUser, {
+    User: {
+      AppID: selectedAppID.value,
+      EmailAddress: username.value
+    },
+    Secret: {
+      AppID: selectedAppID.value,
+      PasswordHash: encryptPassword(password.value)
+    },
+    Message: {
+      ModuleKey: ModuleKey.ModuleIndex,
+      Error: {
+        Title: t('MSG_CREATE_APP_USER_WITH_SECRET_FAIL'),
+        Popup: true,
+        Type: NotificationType.Error
+      }
+    }
+  })
 }
 
 onMounted(() => {
@@ -228,7 +247,25 @@ onMounted(() => {
     }
 
     if (mutation.type === MutationTypes.SetGenesisUsers) {
-      if (!logined.value) {
+      const genesisUsers = mutation.payload as Array<AppRoleUser>
+      genesisUsers.forEach((user) => {
+        store.dispatch(GenesisActionTypes.GetAppUser, {
+          ID: user.UserID,
+          Message: {
+            ModuleKey: ModuleKey.ModuleIndex,
+            Error: {
+              Title: t('MSG_GET_APP_USER_FAIL'),
+              Message: user.UserID,
+              Popup: true,
+              Type: NotificationType.Error
+            }
+          }
+        })
+      })
+    }
+
+    if (mutation.type === MutationTypes.SetAppUsers) {
+      if (!logined.value && genesisUserCreated.value && churchUserCreated.value) {
         void router.push('/login')
       }
     }

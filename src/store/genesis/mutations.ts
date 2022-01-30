@@ -1,12 +1,13 @@
 import { MutationTree } from 'vuex'
 import { MutationTypes } from './mutation-types'
 import { UserState, state as emptyState } from './state'
-import { App, AppRole, AppRoleUser, UserInfo } from './types'
+import { App, AppRole, AppRoleUser, AppUser, UserInfo } from './types'
 
 type UserMutations<S = UserState> = {
   [MutationTypes.SetAdminApps] (state: S, payload: Array<App>): void
   [MutationTypes.SetGenesisRole] (state: S, payload: AppRole): void
   [MutationTypes.SetGenesisUsers] (state: S, payload: Array<AppRoleUser>): void
+  [MutationTypes.SetAppUsers] (state: S, payload: AppUser): void
   [MutationTypes.SetLoginedUser] (state: S, payload: UserInfo): void
   [MutationTypes.SetGoogleToken] (state: S, payload: string): void
   [MutationTypes.Reset] (state: S): void
@@ -24,7 +25,10 @@ const mutations: MutationTree<UserState> & UserMutations = {
     payload.forEach((user) => {
       appID = user.AppID
     })
-    state.GenesisUsers?.set(appID, payload)
+    state.GenesisUsers.set(appID, payload)
+  },
+  [MutationTypes.SetAppUsers] (state: UserState, payload: AppUser) {
+    state.Users.set(payload.ID as string, payload)
   },
   [MutationTypes.SetLoginedUser] (state: UserState, payload: UserInfo) {
     state.LoginedUser = payload

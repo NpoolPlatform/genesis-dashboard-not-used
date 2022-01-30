@@ -15,8 +15,10 @@ export default {
   MSG_CREATE_GENESIS_USER_FAIL: 'You failed to create genesis user',
   MSG_USERNAME_LENGTH_WARNING: 'Username should have 8 letters at least',
   MSG_PASSWORD_LENGTH_WARNING: 'Password should have 8 letters & numbers & symbols at least',
+  MSG_GET_APP_USER_FAIL: 'You failed to get app user',
   MSG_CREATE_ADMIN_APPS: 'Create Admin Apps',
   MSG_CREATE_GENESIS_ROLE: 'Create Genesis Role',
   MSG_CREATE_GENESIS_USER: 'Create Genesis User',
-  MSG_APP_ID: 'App ID'
+  MSG_APP_ID: 'App ID',
+  MSG_CREATE_APP_USER_WITH_SECRET_FAIL: 'You failed to create app user with secret'
 }
