@@ -1,15 +1,17 @@
 apiVersion: networking.k8s.io/v1beta1
 kind: Ingress
 metadata:
-  name: genesis-dashboard-nginx-ingress
+  name: genesis-dashboard-ingress-vpn
   namespace: kube-system
   annotations:
     k8s.kuboard.cn/displayName: genesis-dashboard-nginx
     k8s.kuboard.cn/workload: genesis-dashboard-nginx
-    kubernetes.io/ingress.class: "devops-vpn-nginx-internal"
-    nginx.com/sticky-cookie-services: "serviceName=kuboard srv_id expires=1h path=/"
-
+    kubernetes.io/ingress.class: "traefik-internet-vpn"
+    traefik.ingress.kubernetes.io/router.entrypoints: websecure, web
+    traefik.ingress.kubernetes.io/router.middlewares: kube-system-common-headers@kubernetescrd
 spec:
+  tls:
+    - secretName: genesis-tls
   rules:
     - host: genesis.internal-devops.development.xpool.top
       http: &http_rules

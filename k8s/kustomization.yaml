@@ -3,4 +3,4 @@ commonLabels:
 
 resources:
   - 01-genesis-dashboard.yaml
-  - 02-nginx-ingress.yaml
+  - 02-traefik-vpn-ingress.yaml
