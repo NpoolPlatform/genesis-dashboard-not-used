@@ -16,7 +16,7 @@ declare module '@vue/runtime-core' {
 const api = axios.create({
   method: 'POST',
   baseURL: process.env.DEV ? '/api' : 'https://api.internal-devops.development.xpool.top/api',
-  withCredentials: false,
+  withCredentials: true,
   headers: { 'Content-Type': 'application/json' },
   responseType: 'json',
   timeout: 10000
