@@ -11,14 +11,7 @@ interface UserState {
 
 function state (): UserState {
   return {
-    LoginedUser: {
-      UserID: '',
-      Username: '',
-      EmailAddress: '',
-      Avatar: '',
-      PhoneNO: '',
-      MyInfo: {}
-    },
+    LoginedUser: {},
     GoogleToken: '',
     AdminApps: [] as Array<App>,
     GenesisUsers: new Map<string, Array<AppRoleUser>>(),

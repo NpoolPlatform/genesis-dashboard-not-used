@@ -199,15 +199,8 @@ const actions: ActionTree<UserState, RootState> = {
       req.Message,
       (resp: LoginResponse): void => {
         const headers = api.defaults.headers as Record<string, string>
-        headers['X-User-ID'] = resp.Info.UserBasicInfo.UserID
-        commit(MutationTypes.SetLoginedUser, {
-          UserID: resp.Info.UserBasicInfo.UserID,
-          Username: resp.Info.UserBasicInfo.Username,
-          EmailAddress: resp.Info.UserBasicInfo.EmailAddress,
-          Avatar: resp.Info.UserBasicInfo.Avatar,
-          PhoneNO: resp.Info.UserBasicInfo.PhoneNO,
-          MyInfo: resp.Info
-        })
+        headers['X-User-ID'] = resp.Info.User?.ID as string
+        commit(MutationTypes.SetLoginedUser, resp.Info)
       })
   },
 

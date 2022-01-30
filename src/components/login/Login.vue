@@ -1,8 +1,8 @@
 <template>
   <div class='login-input'>
     <q-input
-      v-model='username'
-      :label='$t("MSG_USERNAME")'
+      v-model='account'
+      :label='$t("MSG_ACCOUNT")'
     >
       <template #prepend>
         <q-icon name='account_circle' />
@@ -51,7 +51,7 @@ import { encryptPassword } from 'src/utils/utils'
 // eslint-disable-next-line @typescript-eslint/unbound-method
 const { t } = useI18n({ useScope: 'global' })
 
-const username = ref('')
+const account = ref('')
 const password = ref('')
 
 const store = useStore()
@@ -98,10 +98,10 @@ onMounted(() => {
 
       // TODO: validate input
       store.dispatch(UserActionTypes.Login, {
-        Username: username.value,
-        Password: encryptPassword(password.value),
-        GoogleRecaptchaResponse: mutation.payload as string,
-        LoginType: LoginType.USERNAME,
+        Account: account.value,
+        PasswordHash: encryptPassword(password.value),
+        ManMachineSpec: mutation.payload as string,
+        LoginType: LoginType.EMAIL_ADDRESS,
         Message: {
           ModuleKey: ModuleKey.ModuleLogin,
           Error: {

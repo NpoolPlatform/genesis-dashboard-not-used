@@ -31,9 +31,7 @@ const getters: GetterTree<UserState, RootState> & UserGetters = {
     }
   },
   getLoginedUser: (state: UserState): UserInfo => state.LoginedUser,
-  getLogined: (state: UserState): boolean => {
-    return state.LoginedUser.UserID !== '' && state.LoginedUser.UserID !== undefined
-  },
+  getLogined: (state: UserState): boolean => state.LoginedUser.User !== undefined,
   getGoogleToken: (state: UserState): string => state.GoogleToken
 }
 

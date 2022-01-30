@@ -3,6 +3,7 @@
 
 export default {
   MSG_USERNAME: 'Username',
+  MSG_ACCOUNT: 'Account',
   MSG_PASSWORD: 'Password',
   MSG_SIGNIN: 'Sign In',
   MSG_CONTACT_ADMIN: 'Contact Admin',
