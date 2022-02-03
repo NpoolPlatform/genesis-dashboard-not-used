@@ -59,13 +59,12 @@ interface AppRoleUser {
   UserID: string
 }
 
-interface GetAppRoleUserByAppRoleRequest {
-  AppID: string
-  RoleID: string
+interface GetGenesisAppRoleUsersByOtherAppRequest {
+  TargetAppID: string,
   Message: ReqMessage
 }
 
-interface GetAppRoleUserByAppRoleResponse {
+interface GetGenesisAppRoleUsersByOtherAppResponse {
   Infos: Array<AppRoleUser>
 }
 
@@ -178,8 +177,8 @@ export {
   CreateGenesisRoleRequest,
   CreateGenesisRoleResponse,
   AppRoleUser,
-  GetAppRoleUserByAppRoleRequest,
-  GetAppRoleUserByAppRoleResponse,
+  GetGenesisAppRoleUsersByOtherAppRequest,
+  GetGenesisAppRoleUsersByOtherAppResponse,
   AppUser,
   GetAppUserRequest,
   GetAppUserResponse,

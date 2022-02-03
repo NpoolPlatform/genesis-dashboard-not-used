@@ -231,9 +231,8 @@ onMounted(() => {
 
     if (mutation.type === MutationTypes.SetGenesisRole) {
       adminApps.value.forEach((app) => {
-        store.dispatch(GenesisActionTypes.GetAppRoleUsersByAppRole, {
-          AppID: app.ID,
-          RoleID: genesisRole.value.ID,
+        store.dispatch(GenesisActionTypes.GetGenesisAppRoleUsersByOtherApp, {
+          TargetAppID: app.ID,
           Message: {
             ModuleKey: ModuleKey.ModuleIndex,
             Error: {
