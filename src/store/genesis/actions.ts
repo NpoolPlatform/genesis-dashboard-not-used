@@ -227,7 +227,7 @@ const actions: ActionTree<UserState, RootState> = {
   [ActionTypes.CreateGenesisAppUserAuth] ({ commit }, req: CreateGenesisAppUserAuthRequest) {
     doAction<CreateGenesisAppUserAuthRequest, CreateGenesisAppUserAuthResponse>(
       commit,
-      API.LOGIN,
+      API.CREATE_GENESIS_APP_USER_AUTH,
       req,
       req.Message,
       (resp: CreateGenesisAppUserAuthResponse): void => {

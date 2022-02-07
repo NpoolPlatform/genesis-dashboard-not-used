@@ -41,7 +41,7 @@
     </q-table>
     <q-table
       dense
-      :rows='genesusAuths'
+      :rows='genesisAuths'
     />
   </div>
 </template>
@@ -82,7 +82,7 @@ const appIDs = ref(adminAppIDs.value)
 
 const genesisRole = computed(() => store.getters.getGenesisRole)
 const genesisUsers = computed(() => store.getters.getGenesisUsers)
-const genesusAuths = computed(() => store.getters.getGenesisAuths)
+const genesisAuths = computed(() => store.getters.getGenesisAuths)
 
 const roles = computed(() => genesisRole.value ? [genesisRole.value] : [])
 
@@ -237,18 +237,15 @@ const onCreateGenesisUser = () => {
 }
 
 const onAuthorizeGenesisUser = () => {
-  adminApps.value.forEach((app) => {
-    store.dispatch(GenesisActionTypes.GetAuthsByOtherApp, {
-      TargetAppID: app.ID,
-      Message: {
-        ModuleKey: ModuleKey.ModuleIndex,
-        Error: {
-          Title: t('MSG_GET_AUTHS_FAIL'),
-          Popup: true,
-          Type: NotificationType.Error
-        }
+  store.dispatch(GenesisActionTypes.CreateGenesisAppUserAuth, {
+    Message: {
+      ModuleKey: ModuleKey.ModuleIndex,
+      Error: {
+        Title: t('MSG_GET_AUTHS_FAIL'),
+        Popup: true,
+        Type: NotificationType.Error
       }
-    })
+    }
   })
 }
 

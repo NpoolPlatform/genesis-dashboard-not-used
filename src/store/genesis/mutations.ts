@@ -35,8 +35,8 @@ const mutations: MutationTree<UserState> & UserMutations = {
         if (auths[i].ID === auth.ID) {
           return
         }
-        auths.push(auth)
       }
+      auths.push(auth)
     })
     state.GenesisAuths = auths
   },
