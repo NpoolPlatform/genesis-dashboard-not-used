@@ -1,4 +1,4 @@
-import { UserInfo, App, AppRole, AppRoleUser, AppUser } from './types'
+import { UserInfo, App, AppRole, AppRoleUser, AppUser, Auth } from './types'
 
 interface UserState {
   LoginedUser: UserInfo
@@ -6,7 +6,8 @@ interface UserState {
   AdminApps: Array<App>
   GensisRole?: AppRole
   GenesisUsers: Map<string, Array<AppRoleUser>>
-  Users: Map<string, AppUser>
+  Users: Map<string, AppUser>,
+  GenesisAuths: Array<Auth>
 }
 
 function state (): UserState {
@@ -15,7 +16,8 @@ function state (): UserState {
     GoogleToken: '',
     AdminApps: [] as Array<App>,
     GenesisUsers: new Map<string, Array<AppRoleUser>>(),
-    Users: new Map<string, AppUser>()
+    Users: new Map<string, AppUser>(),
+    GenesisAuths: []
   }
 }
 

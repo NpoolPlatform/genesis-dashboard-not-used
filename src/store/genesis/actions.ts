@@ -21,7 +21,11 @@ import {
   CreateGenesisUserRequest,
   CreateGenesisUserResponse,
   GetGenesisAppRoleUsersByOtherAppRequest,
-  GetGenesisAppRoleUsersByOtherAppResponse
+  GetGenesisAppRoleUsersByOtherAppResponse,
+  CreateGenesisAppUserAuthRequest,
+  CreateGenesisAppUserAuthResponse,
+  GetAuthsByOtherAppRequest,
+  GetAuthsByOtherAppResponse
 } from './types'
 import { API } from './const'
 import { MutationTypes as NotificationMutationTypes } from '../notifications/mutation-types'
@@ -94,6 +98,22 @@ interface UserActions {
     RootState,
     UserMutations<UserState>>,
     req: LoginRequest): void
+
+  [ActionTypes.CreateGenesisAppUserAuth]({
+    commit
+  }: AugmentedActionContext<
+    UserState,
+    RootState,
+    UserMutations<UserState>>,
+    req: CreateGenesisAppUserAuthRequest): void
+
+  [ActionTypes.GetAuthsByOtherApp]({
+    commit
+  }: AugmentedActionContext<
+    UserState,
+    RootState,
+    UserMutations<UserState>>,
+    req: GetAuthsByOtherAppRequest): void
 
   [ActionTypes.GetGoogleToken]({
     commit
@@ -201,6 +221,28 @@ const actions: ActionTree<UserState, RootState> = {
         const headers = api.defaults.headers as Record<string, string>
         headers['X-User-ID'] = resp.Info.User?.ID as string
         commit(MutationTypes.SetLoginedUser, resp.Info)
+      })
+  },
+
+  [ActionTypes.CreateGenesisAppUserAuth] ({ commit }, req: CreateGenesisAppUserAuthRequest) {
+    doAction<CreateGenesisAppUserAuthRequest, CreateGenesisAppUserAuthResponse>(
+      commit,
+      API.LOGIN,
+      req,
+      req.Message,
+      (resp: CreateGenesisAppUserAuthResponse): void => {
+        commit(MutationTypes.SetGenesisAuths, resp.Infos)
+      })
+  },
+
+  [ActionTypes.GetAuthsByOtherApp] ({ commit }, req: GetAuthsByOtherAppRequest) {
+    doAction<GetAuthsByOtherAppRequest, GetAuthsByOtherAppResponse>(
+      commit,
+      API.GET_AUTHS_BY_OTHER_APP,
+      req,
+      req.Message,
+      (resp: GetAuthsByOtherAppResponse): void => {
+        commit(MutationTypes.SetGenesisAuths, resp.Infos)
       })
   },
 

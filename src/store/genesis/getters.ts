@@ -1,13 +1,14 @@
 import { GetterTree } from 'vuex'
 import { RootState } from '../index'
 import { UserState } from './state'
-import { App, AppRole, AppRoleUser, AppUser, UserInfo } from './types'
+import { App, AppRole, AppRoleUser, AppUser, Auth, UserInfo } from './types'
 
 type UserGetters = {
   getAdminApps (state: UserState): Array<App>
   getGenesisRole (state: UserState): AppRole
   getGenesisUsers (state: UserState): Array<AppRoleUser>
   getAppUserByUserID (state: UserState): (userID: string) => AppUser
+  getGenesisAuths (state: UserState): Array<Auth>
   getLoginedUser (state: UserState): UserInfo
   getLogined (state: UserState): boolean
   getGoogleToken (state: UserState): string
@@ -30,6 +31,7 @@ const getters: GetterTree<UserState, RootState> & UserGetters = {
       return state.Users.get(userID) as AppUser
     }
   },
+  getGenesisAuths: (state: UserState): Array<Auth> => state.GenesisAuths,
   getLoginedUser: (state: UserState): UserInfo => state.LoginedUser,
   getLogined: (state: UserState): boolean => state.LoginedUser.User !== undefined,
   getGoogleToken: (state: UserState): string => state.GoogleToken

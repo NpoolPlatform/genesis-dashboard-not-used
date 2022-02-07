@@ -161,6 +161,32 @@ interface GetGoogleTokenRequest {
   Message: ReqMessage
 }
 
+interface Auth {
+  ID: string
+  AppID: string
+  RoleID: string
+  UserID: string
+  Resource: string
+  Method: string
+}
+
+interface CreateGenesisAppUserAuthRequest {
+  Message: ReqMessage
+}
+
+interface CreateGenesisAppUserAuthResponse {
+  Infos: Array<Auth>
+}
+
+interface GetAuthsByOtherAppRequest {
+  TargetAppID: string
+  Message: ReqMessage
+}
+
+interface GetAuthsByOtherAppResponse {
+  Infos: Array<Auth>
+}
+
 export {
   LoginRequest,
   LoginResponse,
@@ -184,5 +210,10 @@ export {
   GetAppUserResponse,
   CreateGenesisUserRequest,
   CreateGenesisUserResponse,
-  AppUserSecret
+  AppUserSecret,
+  Auth,
+  CreateGenesisAppUserAuthRequest,
+  CreateGenesisAppUserAuthResponse,
+  GetAuthsByOtherAppRequest,
+  GetAuthsByOtherAppResponse
 }

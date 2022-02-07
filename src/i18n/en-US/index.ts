@@ -21,5 +21,7 @@ export default {
   MSG_CREATE_GENESIS_ROLE: 'Create Genesis Role',
   MSG_CREATE_GENESIS_USER: 'Create Genesis User',
   MSG_APP_ID: 'App ID',
-  MSG_CREATE_APP_USER_WITH_SECRET_FAIL: 'You failed to create app user with secret'
+  MSG_CREATE_APP_USER_WITH_SECRET_FAIL: 'You failed to create app user with secret',
+  MSG_AUTHORIZE_GENESIS: 'Authorize Genesis',
+  MSG_GET_AUTHS_FAIL: 'You failed to get auths'
 }

@@ -24,18 +24,25 @@
       dense
       :rows='genesisUsers'
     >
-      <template v-if='!genesisUserCreated || !churchUserCreated' #top-right>
-        <div class='row'>
+      <template #top-right>
+        <div v-if='!genesisUserCreated || !churchUserCreated' class='row'>
           <q-select v-model='selectedAppID' dense :options='appIDs' :label='$t("MSG_APP_ID")' />
           <q-input v-model='username' dense :label='$t("MSG_USERNAME")' />
           <q-input v-model='password' dense :label='$t("MSG_PASSWORD")' disable />
           <q-btn flat dense icon='published_with_changes' @click='onRefreshPassword' />
         </div>
-        <q-btn @click='onCreateGenesisUser'>
+        <q-btn @click='onAuthorizeGenesisUser'>
+          {{ $t('MSG_AUTHORIZE_GENESIS') }}
+        </q-btn>
+        <q-btn v-if='!genesisUserCreated || !churchUserCreated' @click='onCreateGenesisUser'>
           {{ $t('MSG_CREATE_GENESIS_USER') }}
         </q-btn>
       </template>
     </q-table>
+    <q-table
+      dense
+      :rows='genesusAuths'
+    />
   </div>
 </template>
 
@@ -75,6 +82,7 @@ const appIDs = ref(adminAppIDs.value)
 
 const genesisRole = computed(() => store.getters.getGenesisRole)
 const genesisUsers = computed(() => store.getters.getGenesisUsers)
+const genesusAuths = computed(() => store.getters.getGenesisAuths)
 
 const roles = computed(() => genesisRole.value ? [genesisRole.value] : [])
 
@@ -124,6 +132,20 @@ watch(adminApps, () => {
   })
   appIDs.value = adminAppIDs.value
   selectedAppID.value = appIDs.value.length > 0 ? appIDs.value[0] : ''
+
+  adminApps.value.forEach((app) => {
+    store.dispatch(GenesisActionTypes.GetAuthsByOtherApp, {
+      TargetAppID: app.ID,
+      Message: {
+        ModuleKey: ModuleKey.ModuleIndex,
+        Error: {
+          Title: t('MSG_GET_AUTHS_FAIL'),
+          Popup: true,
+          Type: NotificationType.Error
+        }
+      }
+    })
+  })
 })
 
 watch(genesisUsers, () => {
@@ -211,6 +233,22 @@ const onCreateGenesisUser = () => {
         Type: NotificationType.Error
       }
     }
+  })
+}
+
+const onAuthorizeGenesisUser = () => {
+  adminApps.value.forEach((app) => {
+    store.dispatch(GenesisActionTypes.GetAuthsByOtherApp, {
+      TargetAppID: app.ID,
+      Message: {
+        ModuleKey: ModuleKey.ModuleIndex,
+        Error: {
+          Title: t('MSG_GET_AUTHS_FAIL'),
+          Popup: true,
+          Type: NotificationType.Error
+        }
+      }
+    })
   })
 }
 

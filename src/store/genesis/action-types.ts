@@ -8,5 +8,7 @@ export enum ActionTypes {
   GetAppUser = 'GET_APP_USER',
   CreateGenesisUser = 'CREATE_GENESIS_USER',
   Login = 'LOGIN',
-  GetGoogleToken = 'GET_GOOGLE_TOKEN'
+  GetGoogleToken = 'GET_GOOGLE_TOKEN',
+  CreateGenesisAppUserAuth = 'CREATE_GENESIS_APP_USER_AUTH',
+  GetAuthsByOtherApp = 'GET_AUTHS_BY_OTHER_APP'
 }

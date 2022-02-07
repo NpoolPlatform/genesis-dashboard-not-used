@@ -4,6 +4,7 @@ export enum MutationTypes {
   SetGenesisUsers = 'GENESIS_SET_GENESIS_USERS',
   SetAppUsers = 'GENESIS_SET_APP_USERS',
   SetLoginedUser = 'USER_SET_LOGINED_USER',
+  SetGenesisAuths = 'GENESIS_SET_GENESIS_APP_USER_AUTHS',
   SetGoogleToken = 'USER_SET_GOOGLE_TOKEN',
   Reset = 'USER_RESET'
 }
