@@ -254,7 +254,7 @@ pipeline {
         rc=$?
         set -e
         if [ ! 0 -eq $rc ]; then
-          kubectl create secret tls internal-devops-cert --cert=.server-https-ca/internal-devops.$TARGET_ENV.$ROOT_DOMAIN/tls.crt --key=.server-https-ca/internal-devops.$TARGET_ENV.ROOT_DOMAIN/tls.key -n kube-system
+          kubectl create secret tls internal-devops-cert --cert=.server-https-ca/internal-devops.$TARGET_ENV.$ROOT_DOMAIN/tls.crt --key=.server-https-ca/internal-devops.$TARGET_ENV.$ROOT_DOMAIN/tls.key -n kube-system
         fi
         sh 'rm .server-https-ca -rf'
       }
