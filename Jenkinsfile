@@ -255,7 +255,7 @@ pipeline {
           rc=$?
           set -e
           if [ ! 0 -eq $rc ]; then
-            kubectl create secret tls internal-devops-cert --cert=.server-https-ca/internal-devops.$TARGET_ENV.$ROOT_DOMAIN/tls.crt --key=.server-https-ca/internal-devops.$TARGET_ENV.$ROOT_DOMAIN/tls.key -n kube-system
+            kubectl create secret tls internal-devops-cert --cert=.server-https-ca/internal-devops.development.$ROOT_DOMAIN/tls.crt --key=.server-https-ca/internal-devops.development.$ROOT_DOMAIN/tls.key -n kube-system
           fi
           rm .server-https-ca -rf
         '''.stripIndent())
@@ -269,7 +269,6 @@ pipeline {
       }
       steps {
         sh 'sed -i "s/uhub.service.ucloud.cn/$DOCKER_REGISTRY/g" k8s/01-genesis-dashboard.yaml'
-        sh 'sed -i "s/genesis.internal-devops.development.xpool.top/genesis.internal-devops.$TARGET_ENV.$ROOT_DOMAIN/g" k8s/02-traefik-vpn-ingress.yaml'
         sh 'kubectl apply -k k8s'
       }
     }
@@ -288,7 +287,6 @@ pipeline {
           git checkout $tag
           sed -i "s/genesis-dashboard:latest/genesis-dashboard:$tag/g" k8s/01-genesis-dashboard.yaml
           sed -i "s/uhub.service.ucloud.cn/$DOCKER_REGISTRY/g" k8s/01-genesis-dashboard.yaml
-          sed -i "s/genesis.internal-devops.development.xpool.top/genesis.internal-devops.$TARGET_ENV.$ROOT_DOMAIN/g" k8s/02-traefik-vpn-ingress.yaml
           kubectl apply -k k8s
         '''.stripIndent())
       }
@@ -314,7 +312,6 @@ pipeline {
           git checkout $tag
           sed -i "s/genesis-dashboard:latest/genesis-dashboard:$tag/g" k8s/01-genesis-dashboard.yaml
           sed -i "s/uhub.service.ucloud.cn/$DOCKER_REGISTRY/g" k8s/01-genesis-dashboard.yaml
-          sed -i "s/genesis.internal-devops.development.xpool.top/genesis.internal-devops.$TARGET_ENV.$ROOT_DOMAIN/g" k8s/02-traefik-vpn-ingress.yaml
           kubectl apply -k k8s
         '''.stripIndent())
       }
