@@ -237,28 +237,6 @@ pipeline {
       }
     }
 
-    stage('Deploy https certificate') {
-      when {
-        expression { DEPLOY_TARGET == 'true' }
-      }
-      steps {
-        sh 'rm .server-https-ca -rf'
-        withCredentials([gitUsernamePassword(credentialsId: 'KK-github-key', gitToolName: 'git-tool')]) {
-          sh 'git clone https://github.com/NpoolPlatform/server-https-ca.git .server-https-ca'
-        }
-	sh(returnStdout: false, script: '''
-          set +e
-          kubectl get secret -n kube-system | grep internal-devops-cert
-          rc=$?
-          set -e
-          if [ ! 0 -eq $rc ]; then
-            kubectl create secret tls internal-devops-cert --cert=.server-https-ca/internal-devops.development.$ROOT_DOMAIN/tls.crt --key=.server-https-ca/internal-devops.development.$ROOT_DOMAIN/tls.key -n kube-system
-          fi
-          rm .server-https-ca -rf
-        '''.stripIndent())
-      }
-    }
-
     stage('Deploy for development') {
       when {
         expression { DEPLOY_TARGET == 'true' }
@@ -266,6 +244,7 @@ pipeline {
       }
       steps {
         sh 'sed -i "s/uhub.service.ucloud.cn/$DOCKER_REGISTRY/g" k8s/01-genesis-dashboard.yaml'
+        sh 'sed -i "s/development/$TARGET_ENV/g" k8s/02-traefik-vpn-ingress.yaml'
         sh 'kubectl apply -k k8s'
       }
     }
@@ -284,6 +263,7 @@ pipeline {
           git checkout $tag
           sed -i "s/genesis-dashboard:latest/genesis-dashboard:$tag/g" k8s/01-genesis-dashboard.yaml
           sed -i "s/uhub.service.ucloud.cn/$DOCKER_REGISTRY/g" k8s/01-genesis-dashboard.yaml
+          sed -i "s/development/$TARGET_ENV/g" k8s/02-traefik-vpn-ingress.yaml
           kubectl apply -k k8s
         '''.stripIndent())
       }
@@ -309,6 +289,7 @@ pipeline {
           git checkout $tag
           sed -i "s/genesis-dashboard:latest/genesis-dashboard:$tag/g" k8s/01-genesis-dashboard.yaml
           sed -i "s/uhub.service.ucloud.cn/$DOCKER_REGISTRY/g" k8s/01-genesis-dashboard.yaml
+          sed -i "s/development/$TARGET_ENV/g" k8s/02-traefik-vpn-ingress.yaml
           kubectl apply -k k8s
         '''.stripIndent())
       }

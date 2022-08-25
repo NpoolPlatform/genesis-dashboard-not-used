@@ -11,9 +11,9 @@ metadata:
     traefik.ingress.kubernetes.io/router.middlewares: kube-system-common-headers@kubernetescrd
 spec:
   tls:
-    - secretName: internal-devops-cert
+      - secretName: development-npool-top-tls
   rules:
-    - host: genesis.internal-devops.development.xpool.top
+    - host: genesis.development.xpool.top
       http: &http_rules
         paths:
           - path: /
